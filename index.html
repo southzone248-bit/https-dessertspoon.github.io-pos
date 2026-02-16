@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Dessert Spoon</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <h1 class="header-title">The Dessert Spoon</h1>
+    <nav class="nav">
+      <button type="button" class="nav-link active" data-view="pos">POS</button>
+      <button type="button" class="nav-link" data-view="manage">Manage Menu</button>
+      <button type="button" class="nav-link" data-view="sales">Monthly Sales Report</button>
+    </nav>
+  </header>
+
+  <main class="main">
+    <!-- POS / Billing view -->
+    <section id="view-pos" class="view view-active">
+      <div class="pos-layout">
+        <div class="menu-section">
+          <h2 class="section-title">Menu</h2>
+          <div id="menu-grid" class="menu-grid"></div>
+        </div>
+        <div class="cart-section">
+          <h2 class="section-title">Cart & Bill</h2>
+          <div id="cart-items" class="cart-items"></div>
+          <div id="cart-empty" class="cart-empty">Cart is empty. Click menu items to add.</div>
+          <div id="cart-total" class="cart-total"></div>
+          <button type="button" id="btn-clear-cart" class="btn btn-secondary">Clear Cart</button>
+
+          <div class="customer-details">
+            <h3>Customer Details</h3>
+            <label>Name <input type="text" id="customer-name" placeholder="Customer name"></label>
+            <label>Mobile <input type="tel" id="customer-mobile" placeholder="Mobile number"></label>
+          </div>
+
+          <div class="pay-section">
+            <h3>Pay Now</h3>
+            <div class="pay-options">
+              <label class="pay-option"><input type="radio" name="payment" value="cash" checked> Cash</label>
+              <label class="pay-option"><input type="radio" name="payment" value="qr"> QR Code</label>
+            </div>
+            <div id="qr-placeholder" class="qr-placeholder" hidden>
+              <p>Scan to pay</p>
+              <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&amp;data=upi%3A%2F%2Fpay%3Fpa%3Dsreehoney31-1%40okicici%26pn%3DThe%2520Dessert%2520Spoon" alt="QR Code" class="qr-image">
+            </div>
+            <button type="button" id="btn-pay-now" class="btn btn-primary">Pay Now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Manage Menu view -->
+    <section id="view-manage" class="view">
+      <h2 class="section-title">Manage Menu</h2>
+      <form id="form-menu-item" class="form-menu">
+        <input type="hidden" id="edit-id" value="">
+        <label>Item name <input type="text" id="item-name" required placeholder="e.g. Black forest cake"></label>
+        <label>Price (₹) <input type="number" id="item-price" required min="0" step="1" placeholder="400"></label>
+        <label>Image URL <input type="url" id="item-image" placeholder="https://..."></label>
+        <div class="form-actions">
+          <button type="submit" id="btn-save-item" class="btn btn-primary">Add Item</button>
+          <button type="button" id="btn-cancel-edit" class="btn btn-secondary" hidden>Cancel</button>
+        </div>
+      </form>
+      <div class="menu-list-wrap">
+        <table class="menu-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price (₹)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="manage-menu-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Monthly Sales Report view -->
+    <section id="view-sales" class="view">
+      <h2 class="section-title">Monthly Sales Report</h2>
+      <div class="sales-controls">
+        <button type="button" id="btn-prev-month" class="btn btn-secondary">Previous month</button>
+        <span id="sales-month-label" class="sales-month-label"></span>
+        <button type="button" id="btn-next-month" class="btn btn-secondary">Next month</button>
+      </div>
+      <div id="sales-summary" class="sales-summary"></div>
+      <div class="sales-table-wrap">
+        <table class="sales-table">
+          <thead>
+            <tr>
+              <th>Date / Time</th>
+              <th>Customer</th>
+              <th>Mobile</th>
+              <th>Items</th>
+              <th>Total (₹)</th>
+              <th>Payment</th>
+            </tr>
+          </thead>
+          <tbody id="sales-tbody"></tbody>
+        </table>
+      </div>
+      <p id="sales-empty" class="sales-empty" hidden>No sales this month.</p>
+    </section>
+  </main>
+
+  <!-- Hidden print container: filled by JS, then printed -->
+  <div id="print-container" class="print-container" aria-hidden="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
